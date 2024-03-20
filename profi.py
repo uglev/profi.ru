@@ -13,7 +13,9 @@ main_key = {'Психология', 'обида', 'ремонт', 'трубы'} 
 token = '6489483666jkhkjjkhkjsdfhjkdshfjkhdskfjhdsh--yourtoken'
 chat_id = '@blablabla'
 
+
 url = 'https://profi.ru/backoffice/n.php'
+url_site = 'https://spb.profi.ru'
 
 
 def send_email(task):
@@ -95,26 +97,19 @@ try:
         #     arrayClients.append(i.get_attribute('href'))
         # There may be a collection of questionnaires or functionality as desired. arrayClients - list of urls
 
-        for block in soup.find_all(class_='bJoMKY'):
-            task_key = str(block.find(class_='bQJaTZ'))
-            name = str(block.find(class_='gYZUq'))
-            my_url = str(block.find(class_='dNCmqL'))
-            my_url = 'https://spb.profi.ru' + my_url[my_url.index('href="') + 6:my_url.index('" id')]
-            if '">' in task_key and '</h3>' in task_key and '">' in name and '</p>' in name:
-                task_stack = (task_key[task_key.index('">') + 2:task_key.index('</h3>')].lower(),
-                              name[name.index('">') + 2:name.index('</p>')].lower(), my_url)
-            else:
-                task_stack = tuple()
-
+        for block in soup.find_all(class_=re.compile('SnippetBodyStyles__Container-')):
+            task_key = block.find(class_=re.compile('SubjectAndPriceStyles__SubjectsText-'))
+            name = block.find(class_=re.compile('SnippetBodyStyles__MainInfo-'))
+            my_url = url_site + str(block.attrs['href'])
+            task_stack = (str(task_key.get_text()), str(name.get_text()), my_url)
             for key in main_key:
                 for i in task_stack:
-                    for j in i:
-                        if task_stack not in known_tasks and key.lower() in i.lower():
-                            # known_tasks.append(task_key)
-                            # If necessary, send by email
-                            # send_email(str(''.join(task_stack)))
-                            known_tasks.append(task_stack)
-                            bot.send_message(chat_id, str(': '.join(task_stack)))
+                    if task_stack not in known_tasks and key.lower() in i.lower():
+                        # known_tasks.append(task_key)
+                        # If necessary, send by email
+                        # send_email(str(''.join(task_stack)))
+                        known_tasks.append(task_stack)
+                        bot.send_message(chat_id, str(': '.join(task_stack)))
         time.sleep(60)
         driver.get(url)
         page = driver.page_source
