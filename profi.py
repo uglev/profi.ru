@@ -72,7 +72,7 @@ password_input = namesPassword[0].send_keys(myPassword)
 time.sleep(1)
 
 namesButton = driver.execute_script(
-    "return document.getElementsByClassName('ui-button ui-button_mobile ui-button_mobile_large ui-button_font-size-18 ui-button_primary login-form__button');")
+    "return document.getElementsByClassName('ui-button');")
 button_input = namesButton[0].click()
 
 # Pause comfortably to enter the captcha
