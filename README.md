@@ -29,9 +29,15 @@ from bs4 import BeautifulSoup as bs
 service = Service("/usr/local/bin/chromedriver")
 
 chrome_options = Options()
+
 chrome_options.add_argument("--headless")
+
 chrome_options.add_argument("--user-agent=Mozilla/5.0 (compatible; U; ABrowse 0.6; Syllable) AppleWebKit/420+ (KHTML, like Gecko)")
+
 chrome_options.add_argument("--headless")  # Запуск в фоновом режиме
+
 chrome_options.add_argument("--no-sandbox")  # Для FreeBSD
+
 chrome_options.add_argument("--disable-dev-shm-usage")  # Для FreeBSD
+
 driver = webdriver.Chrome(service=service, options=chrome_options)
