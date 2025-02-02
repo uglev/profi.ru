@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup as bs
 import time
 from selenium import webdriver
-import smtplib
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import re
-from email.mime.text import MIMEText
 import telebot
 
 # Settings
@@ -49,14 +49,16 @@ def refreshPage():
     return
 
 
+service = Service("/usr/local/bin/chromedriver") # For FreeBSD, install chromedriver: sudo pkg install chromium
 bot = telebot.TeleBot(token)
 options = webdriver.ChromeOptions()
-options.add_argument(
-    "user-agent=Mozilla/5.0 (compatible; U; ABrowse 0.6; Syllable) AppleWebKit/420+ (KHTML, like Gecko)")
+options.add_argument("--headless")
+options.add_argument("--user-agent=Mozilla/5.0 (compatible; U; ABrowse 0.6; Syllable) AppleWebKit/420+ (KHTML, like Gecko)")
+options.add_argument("--headless") # Execute in background
+options.add_argument("--no-sandbox") # For FreeBSD
+options.add_argument("--disable-dev-shm-usage") # For FreeBSD
 
-driver = webdriver.Chrome(
-    options=options
-)
+driver = webdriver.Chrome(service=service, options=options)
 
 # Enter login and password
 driver.get(url)
