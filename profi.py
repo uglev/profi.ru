@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup as bs
 import time
 from selenium import webdriver
 import smtplib
+import re
 from email.mime.text import MIMEText
 import telebot
 
