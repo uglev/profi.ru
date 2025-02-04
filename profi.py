@@ -109,7 +109,7 @@ try:
             if arr_url not in profi:
                 for key in main_key:
                     for i in task_stack:
-                        if task_stack not in known_tasks and key.lower() in i.lower():
+                        if key.lower() in i.lower():
                             # known_tasks.append(task_key)
                             # known_tasks.append(task_stack)
                             profi.append(arr_url)
