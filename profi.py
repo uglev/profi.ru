@@ -113,7 +113,7 @@ try:
             my_url = url_site + str(block.attrs['href'])
             task_stack = (str(task_key.get_text()), str(name.get_text()), my_url)
             arr_url = ''.join(filter(lambda x: x.isdigit(), my_url))
-            arr_url = '11111111' if len(arr_url) < 8 else arr_url[:len(arr_url)//10]
+            arr_url = '11111111' if len(arr_url) < 8 else arr_url[:8]
             if arr_url not in profi:
                 if word_check(task_stack, main_key, bad_key):
                     profi.append(arr_url)
