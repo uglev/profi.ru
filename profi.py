@@ -84,7 +84,6 @@ time.sleep(30)
 page = driver.page_source
 
 soup = bs(page, 'html.parser')
-# known_tasks = []
 
 try:
     while True:
@@ -105,13 +104,12 @@ try:
             name = block.find(class_=re.compile('SnippetBodyStyles__MainInfo-'))
             my_url = url_site + str(block.attrs['href'])
             task_stack = (str(task_key.get_text()), str(name.get_text()), my_url)
-            arr_url = my_url[len(my_url)+7:len(my_url)+15]
+            arr_url = ''.join(filter(lambda x: x.isdigit(), my_url))
+            arr_url = '11111111' if len(arr_url) < 8 else arr_url[:len(arr_url)//10]
             if arr_url not in profi:
                 for key in main_key:
                     for i in task_stack:
                         if key.lower() in i.lower():
-                            # known_tasks.append(task_key)
-                            # known_tasks.append(task_stack)
                             profi.append(arr_url)
                             bot.send_message(chat_id, str(': '.join(task_stack)))
         if len(profi) > 100:
