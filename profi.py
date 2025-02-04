@@ -10,6 +10,7 @@ import telebot
 myLogin = 'yourlogin'  # login
 myPassword = 'pass'  # password
 main_key = {'Психология', 'обида', 'ремонт', 'трубы'}  # Needed words here
+bad_key = {'врач'} # Needed words here
 
 token = '6489483666jkhkjjkhkjsdfhjkdshfjkhdskfjhdsh--yourtoken'
 chat_id = '@blablabla'
@@ -48,6 +49,15 @@ def refreshPage():
         print("New content!")
     return
 
+def word_check(full_text, good, bad):
+    for key in full_text:
+        for i in good:
+            if i.lower() in key.lower():
+                for j in bad:
+                    if j.lower() in key.lower():
+                        return False
+                return True
+    return False
 
 service = Service("/usr/local/bin/chromedriver") # For FreeBSD, install chromedriver: sudo pkg install chromium
 bot = telebot.TeleBot(token)
@@ -107,11 +117,9 @@ try:
             arr_url = ''.join(filter(lambda x: x.isdigit(), my_url))
             arr_url = '11111111' if len(arr_url) < 8 else arr_url[:len(arr_url)//10]
             if arr_url not in profi:
-                for key in main_key:
-                    for i in task_stack:
-                        if key.lower() in i.lower():
-                            profi.append(arr_url)
-                            bot.send_message(chat_id, str(': '.join(task_stack)))
+                if word_check(task_stack, main_key, bad_key):
+                    profi.append(arr_url)
+                    bot.send_message(chat_id, str(': '.join(task_stack)))
         if len(profi) > 100:
             profi = profi[-10:]
         time.sleep(60)
