@@ -84,7 +84,7 @@ time.sleep(30)
 page = driver.page_source
 
 soup = bs(page, 'html.parser')
-known_tasks = []
+# known_tasks = []
 
 try:
     while True:
@@ -111,7 +111,7 @@ try:
                     for i in task_stack:
                         if task_stack not in known_tasks and key.lower() in i.lower():
                             # known_tasks.append(task_key)
-                            known_tasks.append(task_stack)
+                            # known_tasks.append(task_stack)
                             profi.append(arr_url)
                             bot.send_message(chat_id, str(': '.join(task_stack)))
         if len(profi) > 100:
