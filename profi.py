@@ -9,8 +9,8 @@ import telebot
 # Settings
 myLogin = 'yourlogin'  # login
 myPassword = 'pass'  # password
-main_key = {'Психология', 'обида', 'ремонт', 'трубы'}  # Needed words here
-bad_key = {'врач'} # Needed words here
+main_key = {'Психоло', 'оби', 'ремон', 'труб'}  # Needed parts of words here
+bad_key = {'врач'} # Needed parts of words here
 
 token = '6489483666jkhkjjkhkjsdfhjkdshfjkhdskfjhdsh--yourtoken'
 chat_id = '@blablabla'
@@ -18,7 +18,6 @@ profi = []
 
 url = 'https://profi.ru/backoffice/n.php'
 url_site = 'https://spb.profi.ru'
-
 
 def send_email(task):
     server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -34,7 +33,6 @@ def send_email(task):
     msg['To'] = you
     server.sendmail(me, [you], msg.as_string())
     server.quit()
-
 
 def refreshPage():
     last_height = driver.execute_script("return document.body.scrollHeight")
