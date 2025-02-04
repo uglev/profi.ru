@@ -13,7 +13,7 @@ main_key = {'Психология', 'обида', 'ремонт', 'трубы'} 
 
 token = '6489483666jkhkjjkhkjsdfhjkdshfjkhdskfjhdsh--yourtoken'
 chat_id = '@blablabla'
-
+profi = []
 
 url = 'https://profi.ru/backoffice/n.php'
 url_site = 'https://spb.profi.ru'
@@ -105,14 +105,17 @@ try:
             name = block.find(class_=re.compile('SnippetBodyStyles__MainInfo-'))
             my_url = url_site + str(block.attrs['href'])
             task_stack = (str(task_key.get_text()), str(name.get_text()), my_url)
-            for key in main_key:
-                for i in task_stack:
-                    if task_stack not in known_tasks and key.lower() in i.lower():
-                        # known_tasks.append(task_key)
-                        # If necessary, send by email
-                        # send_email(str(''.join(task_stack)))
-                        known_tasks.append(task_stack)
-                        bot.send_message(chat_id, str(': '.join(task_stack)))
+            arr_url = my_url[len(my_url)+7:len(my_url)+15]
+            if arr_url not in profi:
+                for key in main_key:
+                    for i in task_stack:
+                        if task_stack not in known_tasks and key.lower() in i.lower():
+                            # known_tasks.append(task_key)
+                            known_tasks.append(task_stack)
+                            profi.append(arr_url)
+                            bot.send_message(chat_id, str(': '.join(task_stack)))
+        if len(profi) > 100:
+            profi = profi[-10:]
         time.sleep(60)
         driver.get(url)
         page = driver.page_source
