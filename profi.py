@@ -66,6 +66,7 @@ options.add_argument("--user-agent=Mozilla/5.0 (compatible; U; ABrowse 0.6; Syll
 options.add_argument("--headless") # Execute in background
 options.add_argument("--no-sandbox") # For FreeBSD
 options.add_argument("--disable-dev-shm-usage") # For FreeBSD
+options.add_argument("--dns-prefetch-disable") # Timeout
 
 driver = webdriver.Chrome(service=service, options=options)
 
