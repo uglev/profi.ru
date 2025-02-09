@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup as bs
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options, Service
-#from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
 import re
 import telebot
