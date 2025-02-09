@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup as bs
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options, Service
+#from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import TimeoutException
 import re
 import telebot
 
@@ -69,7 +70,11 @@ options.add_argument("--disable-dev-shm-usage") # For FreeBSD
 driver = webdriver.Chrome(service=service, options=options)
 
 # Enter login and password
-driver.get(url)
+try:
+   driver.get(url);
+except TimeoutException as ex:
+   print(ex.Message)
+   driver.navigate().refresh()
 namesLogin = driver.execute_script(
     "return document.getElementsByClassName('ui-input ui-input-bo login-form__input-login ui-input_desktop ui-input_with-placeholder_empty');")
 namesLogin[0].clear()
@@ -121,7 +126,11 @@ try:
         if len(profi) > 100:
             profi = profi[-10:]
         time.sleep(60)
-        driver.get(url)
+        try:
+            driver.get(url);
+        except TimeoutException as ex:
+            print(ex.Message)
+            driver.navigate().refresh()
         page = driver.page_source
         soup = bs(page, 'html.parser')
 
