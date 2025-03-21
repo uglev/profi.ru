@@ -61,7 +61,6 @@ def word_check(full_text, good, bad):
 service = Service("/usr/local/bin/chromedriver") # For FreeBSD, install chromedriver: sudo pkg install chromium
 bot = telebot.TeleBot(token)
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
 options.add_argument("--user-agent=Mozilla/5.0 (compatible; U; ABrowse 0.6; Syllable) AppleWebKit/420+ (KHTML, like Gecko)")
 options.add_argument("--headless") # Execute in background
 options.add_argument("--no-sandbox") # For FreeBSD
